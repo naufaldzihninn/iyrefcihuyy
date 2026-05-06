@@ -1,0 +1,35 @@
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+.env
+
+# Node / Frontend
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Database
+*.db
+*.sqlite3
+
+# Storage & Assets
+storage/uploads/*
+storage/screenshots/*
+!storage/uploads/.gitkeep
+!storage/screenshots/.gitkeep
+
+# User requested to ignore
+training/
+
+# Large files (optional, but best.pt is small enough)
+# best.pt
