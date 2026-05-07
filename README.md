@@ -69,7 +69,7 @@ Ikuti langkah-langkah di bawah ini untuk menjalankan **RiverEye AI** di mesin lo
    cd backend
    pip install -r requirements.txt
    ```
-4. **PENTING**: Unduh model AI YOLO (`yolov8s.pt`) dan letakkan di **root folder** proyek (`/RiverEye/yolov8s.pt`). Model `.pt` **tidak disertakan** di GitHub karena ukurannya yang besar.
+4. **PENTING**: Model AI YOLO (`yolov8s.pt`) sudah disertakan di repositori ini. Pastikan file tersebut berada di **root folder** proyek (`/RiverEye/yolov8s.pt`).
 
 5. Jalankan server backend:
    ```bash
@@ -120,7 +120,7 @@ RiverEye/
 │       └── index.css          # Desain dan variabel warna sistem
 ├── runs/                      # (Git-Ignored) Folder output default proses pelatihan AI
 ├── storage/                   # (Git-Ignored) Tempat menyimpan upload video dan hasil screenshot
-├── yolov8s.pt                 # (Git-Ignored) File bobot model YOLOv8! (Perlu di-download manual)
+├── yolov8s.pt                 # File bobot model YOLOv8
 └── README.md                  # Dokumentasi proyek ini
 ```
 
@@ -130,9 +130,8 @@ RiverEye/
 
 Mengingat ukuran file model AI (*weights*) dan *dataset* yang sangat besar, repositori ini telah dikonfigurasi menggunakan `.gitignore` untuk mengabaikan direktori tertentu guna mencegah pembengkakan penyimpanan repositori:
 
-- Semua file berakhiran `*.pt` (Model PyTorch / YOLO) **TIDAK** akan di-push.
+- Model pra-terlatih utama (`yolov8s.pt`) telah disertakan dalam repositori untuk kemudahan penggunaan.
 - Folder `runs/`, `datasets/`, `training/` dan `storage/` akan otomatis diabaikan.
-- Anda dapat mengunduh model pra-terlatih (`yolov8s.pt`) secara terpisah dan menambahkannya ke *root folder* sesuai pedoman instalasi.
 
 ---
 <div align="center">

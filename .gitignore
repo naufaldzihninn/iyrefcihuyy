@@ -34,6 +34,9 @@ Floating-Trash-Detection-1/
 scripts/
 runs/
 datasets/
+AquaWatch_AI_PRD.docx
+prd.md
 
-# AI Models (Do not push heavy weights)
+# AI Models (Do not push heavy weights, except the main one)
 *.pt
+!yolov8s.pt
