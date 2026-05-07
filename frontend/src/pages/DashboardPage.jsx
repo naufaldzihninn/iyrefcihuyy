@@ -119,7 +119,7 @@ export default function DashboardPage() {
           <div style={{ background: 'var(--color-surface-2)', padding: '1rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-border)' }}>
             <p className="text-sm" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
               <span className="text-muted">Model Terpasang</span>
-              <span className="font-mono" style={{ color: 'var(--color-success)' }}>best.pt (YOLOv8)</span>
+              <span className="font-mono" style={{ color: 'var(--color-success)' }}>yolov8s.pt</span>
             </p>
             <p className="text-sm" style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span className="text-muted">Kelas Deteksi</span>

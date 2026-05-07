@@ -30,6 +30,10 @@ storage/screenshots/*
 
 # User requested to ignore
 training/
+Floating-Trash-Detection-1/
+scripts/
+runs/
+datasets/
 
-# Large files (optional, but best.pt is small enough)
-# best.pt
+# AI Models (Do not push heavy weights)
+*.pt

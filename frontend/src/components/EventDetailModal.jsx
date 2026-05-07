@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { X } from 'lucide-react'
 import { ConfBadge, StatusBadge } from './Badges'
 import api from '../api/client'
+import logo from '../assets/logo.png'
 
 function formatTime(sec) {
   if (sec == null) return '--'

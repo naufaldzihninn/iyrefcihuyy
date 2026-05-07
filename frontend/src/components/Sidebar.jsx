@@ -2,6 +2,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard, Upload, List, Camera, Waves
 } from 'lucide-react'
+import logo from '../assets/logo.png'
 
 const NAV = [
   { to: '/',         icon: LayoutDashboard, label: 'Dashboard'  },
@@ -14,10 +15,8 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-logo">
-        <div className="sidebar-logo-icon">
-          <Waves size={20} color="#fff" />
-        </div>
-        <span className="sidebar-logo-text">AquaWatch AI</span>
+        <img src={logo} alt="IYREF Logo" style={{ width: 32, height: 32, objectFit: 'contain' }} />
+        <span className="sidebar-logo-text">RiverEye AI</span>
       </div>
 
       <nav className="sidebar-nav">

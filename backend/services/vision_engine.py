@@ -5,7 +5,7 @@ Alur:
   1. Terima path file video + konfigurasi sesi
   2. Buka video dengan OpenCV frame-by-frame
   3. Setiap FRAME_SKIP frame → inferensikan dengan YOLOv8
-  4. Jika deteksi melebihi threshold → buat event (dengan deduplication 2 dtk)
+  4. Jika deteksi melebihi threshold → buat event (dengan deduplication 2-4 dtk)
   5. Broadcast progress via WebSocket setiap N frame
   6. Simpan screenshot frame dengan bounding box terannotasi
   7. Setelah selesai → update status sesi ke 'completed'
@@ -30,10 +30,15 @@ from backend.models.session import AnalysisSession
 from backend.services.websocket_manager import ws_manager
 
 # ─── Config (dari .env via os.getenv) ────────────────────────────────────────
-MODEL_PATH = os.getenv("MODEL_PATH", "../best.pt")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_MODEL_PATH = PROJECT_ROOT / "yolov8s.pt"
+MODEL_PATH = os.getenv("MODEL_PATH", str(DEFAULT_MODEL_PATH))
 SCREENSHOT_DIR = Path(os.getenv("SCREENSHOT_DIR", "./storage/screenshots"))
-FRAME_SKIP = int(os.getenv("FRAME_SKIP", "6"))
-EVENT_DEDUP_SECONDS = float(os.getenv("EVENT_DEDUP_SECONDS", "2.0"))
+FRAME_SKIP = int(os.getenv("FRAME_SKIP", "2"))
+EVENT_DEDUP_SECONDS = float(os.getenv("EVENT_DEDUP_SECONDS", "1.0"))
+INFER_IMGSZ = int(os.getenv("INFER_IMGSZ", "1280"))
+INFER_IOU = float(os.getenv("INFER_IOU", "0.45"))
+INFER_AUGMENT = os.getenv("INFER_AUGMENT", "false").lower() in {"1", "true", "yes", "on"}
 WS_BROADCAST_EVERY_N = 30   # broadcast progress setiap 30 frame diproses
 
 # ─── Load model sekali saat modul diimport ────────────────────────────────────
@@ -45,8 +50,11 @@ def get_model() -> YOLO:
     if _model is None:
         model_path = Path(MODEL_PATH)
         if not model_path.exists():
-            # coba path relatif dari file ini
-            model_path = Path(__file__).parent.parent.parent / "best.pt"
+            raise FileNotFoundError(
+                f"Model tidak ditemukan: {model_path}. "
+                "Set env MODEL_PATH ke file weights yang valid."
+            )
+        print(f"[VisionEngine] Loading model from: {model_path}")
         _model = YOLO(str(model_path))
     return _model
 
@@ -156,7 +164,15 @@ async def process_video(
             video_timestamp_sec = frame_number / fps
 
             # ── Inferensi YOLOv8 ─────────────────────────────────────────
-            results = model(frame, conf=confidence_threshold, verbose=False)
+            results = model.predict(
+                frame,
+                conf=confidence_threshold,
+                iou=INFER_IOU,
+                imgsz=INFER_IMGSZ,
+                max_det=300,
+                augment=INFER_AUGMENT,
+                verbose=False,
+            )
             detections = []
 
             for result in results:

@@ -5,6 +5,7 @@ import api from '../api/client'
 import { StatusBadge, ConfBadge } from '../components/Badges'
 import EventDetailModal from '../components/EventDetailModal'
 import SessionDetailModal from '../components/SessionDetailModal'
+import logo from '../assets/logo.png'
 
 function formatDuration(sec) {
   if (!sec) return '--'
@@ -50,7 +51,7 @@ export default function ResultsPage() {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `aquawatch_report_session_${sessionId}.json`
+    a.download = `rivereye_report_session_${sessionId}.json`
     a.click()
     URL.revokeObjectURL(url)
   }

@@ -4,6 +4,7 @@ import { useDropzone } from 'react-dropzone'
 import { Upload, FileVideo, AlertCircle, CheckCircle2 } from 'lucide-react'
 import api from '../api/client'
 import ProgressBar from '../components/ProgressBar'
+import logo from '../assets/logo.png'
 
 const ACCEPTED = { 'video/mp4': ['.mp4'], 'video/avi': ['.avi'], 'video/quicktime': ['.mov'], 'video/x-matroska': ['.mkv'] }
 const MAX_MB = 200
@@ -14,7 +15,7 @@ export default function UploadPage() {
 
   const [file, setFile] = useState(null)
   const [locationName, setLocationName] = useState('')
-  const [threshold, setThreshold] = useState(0.6)
+  const [threshold, setThreshold] = useState(0.25)
 
   const [phase, setPhase] = useState('idle') // idle | uploading | processing | done | error
   const [progress, setProgress] = useState(0)
@@ -180,13 +181,13 @@ export default function UploadPage() {
               <input
                 id="threshold-slider"
                 type="range"
-                min="0.3" max="0.95" step="0.05"
+                min="0.2" max="0.95" step="0.05"
                 value={threshold}
                 onChange={(e) => setThreshold(parseFloat(e.target.value))}
                 style={{ width: '100%', accentColor: 'var(--color-primary)' }}
               />
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--color-text-dim)' }}>
-                <span>30% (sensitif)</span><span>95% (ketat)</span>
+                <span>20% (sensitif)</span><span>95% (ketat)</span>
               </div>
             </div>
           </div>

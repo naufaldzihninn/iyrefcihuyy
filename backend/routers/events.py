@@ -1,6 +1,8 @@
 """
 Router: /api/events — CRUD event deteksi
 """
+from pathlib import Path
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -79,6 +81,29 @@ def update_event_status(
     db.commit()
     db.refresh(e)
     return _serialize(e)
+
+
+@router.delete("/{event_id}")
+def delete_event(event_id: int, db: Session = Depends(get_db)):
+    """Hapus satu event + screenshot terkait (jika ada)."""
+    e = db.get(Event, event_id)
+    if not e:
+        raise HTTPException(404, "Event tidak ditemukan.")
+
+    screenshot_path = e.screenshot_path
+    db.delete(e)
+    db.commit()
+
+    if screenshot_path:
+        try:
+            p = Path(screenshot_path)
+            if p.exists() and p.is_file():
+                p.unlink()
+        except OSError:
+            # Jangan gagalkan request kalau file sudah tidak ada / tidak bisa dihapus
+            pass
+
+    return {"ok": True, "deleted_event_id": event_id}
 
 
 def _serialize(e: Event) -> dict:

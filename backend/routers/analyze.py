@@ -28,7 +28,7 @@ async def start_analysis(
     background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     location_name: str = Form(default=""),
-    confidence_threshold: float = Form(default=0.6),
+    confidence_threshold: float = Form(default=0.25),
     recorded_at: str = Form(default=""),
     db: Session = Depends(get_db),
 ):

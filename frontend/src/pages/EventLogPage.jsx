@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Filter, Search } from 'lucide-react'
+import { Filter, Eye, Trash2 } from 'lucide-react'
 import api from '../api/client'
 import { StatusBadge, ConfBadge } from '../components/Badges'
 import EventDetailModal from '../components/EventDetailModal'
@@ -30,6 +30,19 @@ export default function EventLogPage() {
 
   const handleStatusUpdate = (updated) => {
     setEvents(prev => prev.map(e => e.id === updated.id ? { ...e, ...updated } : e))
+  }
+
+  const handleDeleteEvent = async (eventId) => {
+    const ok = window.confirm('Hapus event ini dari log? Aksi ini tidak bisa dibatalkan.')
+    if (!ok) return
+
+    try {
+      await api.delete(`/events/${eventId}`)
+      if (selectedEvent?.id === eventId) setSelectedEvent(null)
+      loadEvents()
+    } catch (e) {
+      alert('Gagal menghapus event.')
+    }
   }
 
   return (
@@ -100,12 +113,25 @@ export default function EventLogPage() {
                     <td><ConfBadge score={e.confidence_score} /></td>
                     <td><StatusBadge status={e.status} /></td>
                     <td>
-                      <button
-                        className="btn btn-secondary btn-sm"
-                        onClick={(ev) => { ev.stopPropagation(); setSelectedEvent(e); }}
-                      >
-                        Detail
-                      </button>
+                      <div style={{ display: 'flex', gap: '0.4rem' }}>
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          title="Detail"
+                          onClick={(ev) => { ev.stopPropagation(); setSelectedEvent(e); }}
+                        >
+                          <Eye size={14} />
+                        </button>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          title="Hapus"
+                          onClick={(ev) => {
+                            ev.stopPropagation()
+                            handleDeleteEvent(e.id)
+                          }}
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
