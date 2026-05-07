@@ -11,7 +11,7 @@
 
 <br />
 
-**RiverEye AI** (sebelumnya *AquaWatch*) adalah sebuah aplikasi cerdas untuk mendeteksi sampah pada permukaan air (sungai, danau, kanal) secara otomatis menggunakan teknologi Computer Vision. Dibangun dengan backend asinkron berperforma tinggi dan antarmuka web modern yang dinamis.
+**RiverEye AI** adalah sebuah aplikasi cerdas untuk mendeteksi sampah pada permukaan air (sungai, danau, kanal) secara otomatis menggunakan teknologi Computer Vision. Dibangun dengan backend asinkron berperforma tinggi dan antarmuka web modern yang dinamis.
 
 ---
 
@@ -69,7 +69,7 @@ Ikuti langkah-langkah di bawah ini untuk menjalankan **RiverEye AI** di mesin lo
    cd backend
    pip install -r requirements.txt
    ```
-4. **PENTING**: Model AI YOLO (`yolov8s.pt`) sudah disertakan di repositori ini. Pastikan file tersebut berada di **root folder** proyek (`/RiverEye/yolov8s.pt`).
+4. **Catatan**: Model AI YOLO (`yolov8s.pt`) sudah disertakan di repositori ini, sehingga Anda tidak perlu repot mengunduhnya secara manual.
 
 5. Jalankan server backend:
    ```bash
