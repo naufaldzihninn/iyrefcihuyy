@@ -124,14 +124,7 @@ RiverEye/
 └── README.md                  # Dokumentasi proyek ini
 ```
 
----
 
-## 🔒 Catatan Kontribusi & Git
-
-Mengingat ukuran file model AI (*weights*) dan *dataset* yang sangat besar, repositori ini telah dikonfigurasi menggunakan `.gitignore` untuk mengabaikan direktori tertentu guna mencegah pembengkakan penyimpanan repositori:
-
-- Model pra-terlatih utama (`yolov8s.pt`) telah disertakan dalam repositori untuk kemudahan penggunaan.
-- Folder `runs/`, `datasets/`, `training/` dan `storage/` akan otomatis diabaikan.
 
 ---
 <div align="center">
